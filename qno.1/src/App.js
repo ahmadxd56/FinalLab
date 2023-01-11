@@ -1,4 +1,5 @@
 import React from 'react';
+import "./App.css";
 
 function App() {
   const [state, setState] = React.useState([]);
@@ -6,7 +7,7 @@ function App() {
 
   const apiList = state.map((item, index) => {
     return (
-      <div key={index}>
+      <div key={index} className="list">
         <li>{item.brand}</li>
         <li>{item.title}</li>
         <li>{item.description}</li>
@@ -18,8 +19,8 @@ function App() {
   async function apiFetch() {
     const res = await fetch(`https://dummyjson.com/products?limit=${limit}`)
     const data = await res.json();
-    console.log(data.products)
     setState(data.products)
+    console.log(data.products)
   }
   async function addItems() {
     if (limit <= 150) {
@@ -29,9 +30,9 @@ function App() {
   }
   return (
     <div className="App">
-      <button onClick={apiFetch}>Fetch Data From API</button>
+      <button className='button-37' onClick={apiFetch}>Fetch Data From API</button>
       <div>{apiList}</div>
-      {state.length > 0 && <button onClick={addItems}>Import +10</button>}
+      {state.length > 0 && <button className='button-37' onClick={addItems}>Import +10</button>}
     </div>
   );
 }

@@ -15,9 +15,27 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, })
 
 require("./postModel");
 const post = mongoose.model("Post");
-app.post("/getdata", async (req, res) => {
-    const { name, email, text } = req.body;
 
+app.get("/posts", async (req, res) => {
+
+    try {
+        const { page, size } = req.query;
+        if (!page) {
+            page = 1;
+        }
+        if (!size) {
+            size = 10;
+        }
+        const limit = parseInt(size);
+        const posts = await Posts.find().limit(limit)
+        res.send({
+            page,
+            size,
+        });
+    }
+    catch (err) {
+        res.status(204).send("No Content Returned");
+    }
 });
 
 app.listen(5000, () => {
